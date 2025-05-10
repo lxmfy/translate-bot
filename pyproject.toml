@@ -1,5 +1,5 @@
 [project]
-name = "translate-bot"
+name = "lxmfy-translate-bot"
 version = "0.1.0"
 description = "translate-bot for lxmf"
 authors = [

@@ -18,7 +18,7 @@ pip install lxmfy-translate-bot
 
 1. Start the bot:
 ```bash
-translate-bot
+lxmfy-translate-bot
 ```
 
 2. Available commands:
