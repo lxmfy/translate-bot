@@ -1,0 +1,20 @@
+[project]
+name = "translate-bot"
+version = "0.1.0"
+description = "translate-bot for lxmf"
+authors = [
+    {name = "Ivan"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "lxmfy (>=0.7.1,<0.8.0)",
+    "argostranslate (>=1.9.6,<2.0.0)"
+]
+
+[project.scripts]
+translate-bot = "translate_bot.bot:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
