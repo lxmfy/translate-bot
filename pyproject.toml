@@ -21,5 +21,17 @@ packages = [
 ]
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = [
+    "poetry-core>=2.0.0,<3.0.0",
+    "setuptools>=42",
+    "wheel",
+    "cmake>=3.5",
+    "ninja"
+]
 build-backend = "poetry.core.masonry.api"
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine"
+]

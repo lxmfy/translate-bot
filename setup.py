@@ -5,12 +5,18 @@ setup(
     version="1.0.0",
     packages=find_packages(),
     install_requires=[
-        "lxmfy",
-        "argostranslate",
+        "lxmfy>=0.7.1,<0.8.0",
+        "argostranslate>=1.9.6,<2.0.0",
+    ],
+    setup_requires=[
+        "setuptools>=42",
+        "wheel",
+        "cmake>=3.5",
+        "ninja"
     ],
     entry_points={
         'console_scripts': [
-            'translate-bot=translate_bot.bot:main',
+            'translate-bot=lxmfy_translate_bot.bot:main',
         ],
     },
     author="LXMFy",
