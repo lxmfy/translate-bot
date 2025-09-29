@@ -610,34 +610,34 @@ type = ["pygobject-stubs", "pytest-mypy", "shtab", "types-pywin32"]
 
 [[package]]
 name = "lxmf"
-version = "0.6.3"
+version = "0.8.0"
 description = "Lightweight Extensible Message Format for Reticulum"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
 files = [
-    {file = "lxmf-0.6.3-py3-none-any.whl", hash = "sha256:a878867318c0274b86139882eae8e6fc1518ccf7b7a20e57caf38a12caa4154c"},
-    {file = "lxmf-0.6.3.tar.gz", hash = "sha256:e94aee6c7c3ee8adb17a86e853c07b1633b9e21c3beffc8f4297917193ec9931"},
+    {file = "lxmf-0.8.0-py3-none-any.whl", hash = "sha256:78357d4a34fe8b96b5d249a424e5de5c5188721a0b151805779a113268db2f81"},
+    {file = "lxmf-0.8.0.tar.gz", hash = "sha256:125cf6eafe631706385cc2a90aaaadbe564557142495e7bf195df1156a9beeae"},
 ]
 
 [package.dependencies]
-rns = ">=0.9.3"
+rns = ">=1.0.0"
 
 [[package]]
 name = "lxmfy"
-version = "0.7.1"
+version = "1.0.1"
 description = "LXMF bot framework for creating bots for the Reticulum Network"
 optional = false
-python-versions = "<4.0,>=3.11"
+python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "lxmfy-0.7.1-py3-none-any.whl", hash = "sha256:c188f5a12c6b7f353d93d89fb1013144d2808462913cd07023aa2e4dc2fbe216"},
-    {file = "lxmfy-0.7.1.tar.gz", hash = "sha256:e08564741b85f527cd3a73679706644a4e5f72261a13536b5969f47ccb5bcba5"},
+    {file = "lxmfy-1.0.1-py3-none-any.whl", hash = "sha256:150e7f772b3eb7f737c5dc06b6ecca61fa2d7c127c287af72a967832c234139e"},
+    {file = "lxmfy-1.0.1.tar.gz", hash = "sha256:9de2e4dfac89dfc3560b2bef73f0edac4907f1ad49835eaea07022b6fb85bf86"},
 ]
 
 [package.dependencies]
-lxmf = ">=0.6.3,<0.7.0"
-rns = ">=0.9.5,<0.10.0"
+lxmf = ">=0.8.0"
+rns = ">=1.0.0"
 
 [[package]]
 name = "markdown-it-py"
@@ -1141,7 +1141,7 @@ version = "6.31.1"
 description = ""
 optional = false
 python-versions = ">=3.9"
-groups = ["main", "dev"]
+groups = ["main"]
 files = [
     {file = "protobuf-6.31.1-cp310-abi3-win32.whl", hash = "sha256:7fa17d5a29c2e04b7d90e5e32388b8bfd0e7107cd8e616feef7ed3fa6bdab5c9"},
     {file = "protobuf-6.31.1-cp310-abi3-win_amd64.whl", hash = "sha256:426f59d2964864a1a366254fa703b8632dcec0790d8862d30034d8245e1cd447"},
@@ -1488,19 +1488,48 @@ jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 name = "rns"
-version = "0.9.5"
+version = "1.0.0"
 description = "Self-configuring, encrypted and resilient mesh networking stack for LoRa, packet radio, WiFi and everything in between"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
 files = [
-    {file = "rns-0.9.5-py3-none-any.whl", hash = "sha256:ae6587c86c98cae0df73567af093cc92fe204e71bb01f2506da9aec626a27e97"},
-    {file = "rns-0.9.5.tar.gz", hash = "sha256:a539ede3d3939726cf42d17f19fae87c442f6dc43ea1ccae5b11ed0ebe38fe8e"},
+    {file = "rns-1.0.0-py3-none-any.whl", hash = "sha256:5a9f18840510b69f89c6706d130177e2843c9e19c774707ae2661030d693dfc1"},
+    {file = "rns-1.0.0.tar.gz", hash = "sha256:9f1c594e4eabd64dea4c1bd59ad1b9291e6a28b1d8ab5689a19708f13100735b"},
 ]
 
 [package.dependencies]
 cryptography = ">=3.4.7"
 pyserial = ">=3.5"
+
+[[package]]
+name = "ruff"
+version = "0.13.2"
+description = "An extremely fast Python linter and code formatter, written in Rust."
+optional = false
+python-versions = ">=3.7"
+groups = ["dev"]
+files = [
+    {file = "ruff-0.13.2-py3-none-linux_armv6l.whl", hash = "sha256:3796345842b55f033a78285e4f1641078f902020d8450cade03aad01bffd81c3"},
+    {file = "ruff-0.13.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:ff7e4dda12e683e9709ac89e2dd436abf31a4d8a8fc3d89656231ed808e231d2"},
+    {file = "ruff-0.13.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:c75e9d2a2fafd1fdd895d0e7e24b44355984affdde1c412a6f6d3f6e16b22d46"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cceac74e7bbc53ed7d15d1042ffe7b6577bf294611ad90393bf9b2a0f0ec7cb6"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:6ae3f469b5465ba6d9721383ae9d49310c19b452a161b57507764d7ef15f4b07"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:4f8f9e3cd6714358238cd6626b9d43026ed19c0c018376ac1ef3c3a04ffb42d8"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:c6ed79584a8f6cbe2e5d7dbacf7cc1ee29cbdb5df1172e77fbdadc8bb85a1f89"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:aed130b2fde049cea2019f55deb939103123cdd191105f97a0599a3e753d61b0"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:1887c230c2c9d65ed1b4e4cfe4d255577ea28b718ae226c348ae68df958191aa"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5bcb10276b69b3cfea3a102ca119ffe5c6ba3901e20e60cf9efb53fa417633c3"},
+    {file = "ruff-0.13.2-py3-none-manylinux_2_31_riscv64.whl", hash = "sha256:afa721017aa55a555b2ff7944816587f1cb813c2c0a882d158f59b832da1660d"},
+    {file = "ruff-0.13.2-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:1dbc875cf3720c64b3990fef8939334e74cb0ca65b8dbc61d1f439201a38101b"},
+    {file = "ruff-0.13.2-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:5b939a1b2a960e9742e9a347e5bbc9b3c3d2c716f86c6ae273d9cbd64f193f22"},
+    {file = "ruff-0.13.2-py3-none-musllinux_1_2_i686.whl", hash = "sha256:50e2d52acb8de3804fc5f6e2fa3ae9bdc6812410a9e46837e673ad1f90a18736"},
+    {file = "ruff-0.13.2-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:3196bc13ab2110c176b9a4ae5ff7ab676faaa1964b330a1383ba20e1e19645f2"},
+    {file = "ruff-0.13.2-py3-none-win32.whl", hash = "sha256:7c2a0b7c1e87795fec3404a485096bcd790216c7c146a922d121d8b9c8f1aaac"},
+    {file = "ruff-0.13.2-py3-none-win_amd64.whl", hash = "sha256:17d95fb32218357c89355f6f6f9a804133e404fc1f65694372e02a557edf8585"},
+    {file = "ruff-0.13.2-py3-none-win_arm64.whl", hash = "sha256:da711b14c530412c827219312b7d7fbb4877fb31150083add7e8c5336549cea7"},
+    {file = "ruff-0.13.2.tar.gz", hash = "sha256:cb12fffd32fb16d32cef4ed16d8c7cdc27ed7c944eaa98d99d01ab7ab0b710ff"},
+]
 
 [[package]]
 name = "sacremoses"
@@ -1828,7 +1857,7 @@ version = "2.5.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.9"
-groups = ["main", "dev"]
+groups = ["main"]
 files = [
     {file = "urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc"},
     {file = "urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760"},
@@ -1846,4 +1875,4 @@ dev = ["build", "twine"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4.0"
-content-hash = "01d0e8674d959a8a3630c5d9d84f8360eb3878b3b048e1965a3386823cfd9ec5"
+content-hash = "8893b6bc4c0c7556c9e899cca4b766b96a662f2916784f167ca362fee80bc824"
