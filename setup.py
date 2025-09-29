@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="lxmfy-translate-bot",
-    version="1.1.0",
+    version="1.2.0",
     packages=find_packages(),
     install_requires=[
         "lxmfy>=1.0.1,<2.0.0",
