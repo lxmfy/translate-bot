@@ -15,22 +15,20 @@ class TranslateBot:
 
     def __init__(self):
         """Initialize the translation bot."""
-        # Initialize Argos Translate packages
         argostranslate.package.update_package_index()
         self.available_packages = argostranslate.package.get_available_packages()
 
-        # Initialize statistics tracking
         self.start_time = time.time()
         self.translations_completed = 0
         self.total_translation_time = 0.0
-        self.translation_times = []  # Keep last 100 translation times for avg calculation
-
-        # Create LXMFy bot instance
+        self.translation_times = []
         self.bot = LXMFBot(
             name="LXMFy Translate Bot",
             command_prefix="",
             storage_path="translate_data",
             permissions_enabled=True,
+            signature_verification_enabled=False,
+            require_message_signatures=False,
         )
 
         # Set up bot icon
@@ -72,19 +70,16 @@ class TranslateBot:
                 )
 
                 if package:
-                    # Track translation start time
                     translation_start = time.time()
 
                     argostranslate.package.install_from_path(package.download())
                     translated = argostranslate.translate.translate(text, source_lang, target_lang)
 
-                    # Track translation completion time
                     translation_time = time.time() - translation_start
                     self.translations_completed += 1
                     self.total_translation_time += translation_time
                     self.translation_times.append(translation_time)
 
-                    # Keep only last 100 translation times for average calculation
                     if len(self.translation_times) > 100:
                         self.translation_times.pop(0)
 
@@ -120,86 +115,80 @@ class TranslateBot:
         @self.bot.command(name="help", description="Show detailed help and usage information")
         def help_command(ctx):
             """Show comprehensive help for all bot commands."""
-            help_text = """**LXMFy Translate Bot Help**
+            help_text = """LXMFy Translate Bot Help
 
-**Available Commands:**
+Available Commands:
 
-**translate** `<source_lang> <target_lang> <text>`
+translate <source_lang> <target_lang> <text>
    Translate text between languages
-   • Example: `translate en es Hello world`
-   • Example: `translate fr en Bonjour le monde`
-   • Note: Language codes are 2-letter (en, es, fr, de, it, pt, etc.)
+   - Example: translate en es Hello world
+   - Example: translate fr en Bonjour le monde
+   - Note: Language codes are 2-letter (en, es, fr, de, it, pt, etc.)
 
-**languages**
+languages
    Show all available language codes for translation
-   • Example: `languages`
-   • Returns a list of supported language codes
+   - Example: languages
+   - Returns a list of supported language codes
 
-**stats**
+stats
    Show bot statistics and performance metrics
-   • Example: `stats`
-   • Shows uptime, translations completed, average response time, and model status
+   - Example: stats
+   - Shows uptime, translations completed, average response time, and model status
 
-**help**
+help
    Show this help message
-   • Example: `help`
+   - Example: help
 
-**Language Code Examples:**
-• en = English    • es = Spanish    • fr = French
-• de = German     • it = Italian    • pt = Portuguese
-• ru = Russian    • zh = Chinese    • ja = Japanese
-• ar = Arabic     • hi = Hindi      • ko = Korean
+Language Code Examples:
+- en = English    es = Spanish    fr = French
+- de = German     it = Italian    pt = Portuguese
+- ru = Russian    zh = Chinese    ja = Japanese
+- ar = Arabic     hi = Hindi      ko = Korean
 
-**Tips:**
-• All commands work offline once models are downloaded
-• First translation of a language pair downloads the model automatically
-• Use `download` command to pre-load models for better performance
-• Invalid language pairs will show an error message
+Tips:
+- All commands work offline once models are downloaded
+- First translation of a language pair downloads the model automatically
+- Invalid language pairs will show an error message
 
-**Need more languages?** Use `languages` to see what's available!"""
+Need more languages? Use languages to see what's available!"""
 
             ctx.reply(help_text, lxmf_fields=self.bot_icon_field)
 
         @self.bot.command(name="stats", description="Show bot statistics and performance metrics")
         def stats_command(ctx):
             """Show comprehensive bot statistics."""
-            # Calculate uptime
             uptime_seconds = time.time() - self.start_time
             uptime_str = self.format_uptime(uptime_seconds)
 
-            # Get installed packages
             installed_packages = argostranslate.package.get_installed_packages()
             installed_count = len(installed_packages)
             total_available = len(self.available_packages)
 
-            # Calculate translation statistics
             avg_translation_time = 0.0
             if self.translation_times:
                 avg_translation_time = sum(self.translation_times) / len(self.translation_times)
 
-            # Format stats message
-            stats_text = f"""**Bot Statistics**
+            stats_text = f"""Bot Statistics
 
-**Uptime:** {uptime_str}
-**Translations Completed:** {self.translations_completed}
-**Average Translation Time:** {avg_translation_time:.2f} seconds
-**Total Translation Time:** {self.total_translation_time:.2f} seconds
+Uptime: {uptime_str}
+Translations Completed: {self.translations_completed}
+Average Translation Time: {avg_translation_time:.2f} seconds
+Total Translation Time: {self.total_translation_time:.2f} seconds
 
-**Translation Models:**
-• Downloaded: {installed_count} packages
-• Available: {total_available} packages
-• Coverage: {installed_count}/{total_available} ({installed_count/total_available*100:.1f}%)"""
+Translation Models:
+- Downloaded: {installed_count} packages
+- Available: {total_available} packages
+- Coverage: {installed_count}/{total_available} ({installed_count/total_available*100:.1f}%)"""
 
             if installed_packages:
-                # Show some example installed packages
                 package_list = []
-                for pkg in installed_packages[:5]:  # Show first 5
-                    package_list.append(f"• {pkg.from_code} → {pkg.to_code}")
+                for pkg in installed_packages[:5]:
+                    package_list.append(f"- {pkg.from_code} -> {pkg.to_code}")
 
                 if len(installed_packages) > 5:
-                    package_list.append(f"• ... and {len(installed_packages) - 5} more")
+                    package_list.append(f"- ... and {len(installed_packages) - 5} more")
 
-                stats_text += "\n\n**Installed Packages:**\n" + "\n".join(package_list)
+                stats_text += "\n\nInstalled Packages:\n" + "\n".join(package_list)
 
             ctx.reply(stats_text, lxmf_fields=self.bot_icon_field)
 
@@ -208,8 +197,18 @@ class TranslateBot:
         print("Downloading all available translation packages...")
         success_count = 0
         fail_count = 0
+        skipped_count = 0
+
+        installed_packages = argostranslate.package.get_installed_packages()
+        installed_keys = {(pkg.from_code, pkg.to_code) for pkg in installed_packages}
 
         for package in self.available_packages:
+            package_key = (package.from_code, package.to_code)
+            if package_key in installed_keys:
+                print(f"Skipping {package.from_code} → {package.to_code} (already installed)")
+                skipped_count += 1
+                continue
+
             try:
                 print(f"Downloading {package.from_code} → {package.to_code}...")
                 argostranslate.package.install_from_path(package.download())
@@ -218,7 +217,45 @@ class TranslateBot:
                 print(f"Failed to download {package.from_code} → {package.to_code}: {e}")
                 fail_count += 1
 
-        print(f"Download complete! {success_count} successful, {fail_count} failed.")
+        print(f"Download complete! {success_count} successful, {fail_count} failed, {skipped_count} skipped (already installed).")
+        return success_count, fail_count
+
+    def download_specific_packages(self, language_pairs):
+        """Download specific language pair packages."""
+        print(f"Downloading {len(language_pairs)} specific language pairs...")
+        success_count = 0
+        fail_count = 0
+        skipped_count = 0
+
+        installed_packages = argostranslate.package.get_installed_packages()
+        installed_keys = {(pkg.from_code, pkg.to_code) for pkg in installed_packages}
+
+        for from_lang, to_lang in language_pairs:
+            package_key = (from_lang, to_lang)
+            if package_key in installed_keys:
+                print(f"Skipping {from_lang} → {to_lang} (already installed)")
+                skipped_count += 1
+                continue
+
+            try:
+                package = next(
+                    (p for p in self.available_packages
+                     if p.from_code == from_lang and p.to_code == to_lang),
+                    None,
+                )
+
+                if package:
+                    print(f"Downloading {from_lang} → {to_lang}...")
+                    argostranslate.package.install_from_path(package.download())
+                    success_count += 1
+                else:
+                    print(f"Package {from_lang} → {to_lang} not found in available packages")
+                    fail_count += 1
+            except Exception as e:
+                print(f"Failed to download {from_lang} → {to_lang}: {e}")
+                fail_count += 1
+
+        print(f"Download complete! {success_count} successful, {fail_count} failed, {skipped_count} skipped (already installed).")
         return success_count, fail_count
 
     def format_uptime(self, seconds):
@@ -258,13 +295,21 @@ def main():
         nargs="+",
         help="Download specific language pairs before starting (format: lang1-lang2 lang3-lang4)",
     )
+    parser.add_argument(
+        "--enable-signatures",
+        action="store_true",
+        help="Enable cryptographic signature verification for incoming messages (optional signatures)",
+    )
+    parser.add_argument(
+        "--require-signatures",
+        action="store_true",
+        help="Require cryptographic signatures for all incoming messages (strict mode)",
+    )
 
     args = parser.parse_args()
 
-    # Create bot instance
     bot = TranslateBot()
 
-    # Handle downloads if requested
     if args.download_all:
         print("Downloading all translation models...")
         success_count, fail_count = bot.download_all_packages()
@@ -273,7 +318,6 @@ def main():
             print("Some downloads failed. The bot will still work but may download missing models on-demand.")
 
     elif args.download:
-        # Parse language pairs
         pairs = []
         for arg in args.download:
             if "-" in arg and len(arg.split("-")) == 2:
@@ -288,7 +332,19 @@ def main():
             success_count, fail_count = bot.download_specific_packages(pairs)
             print(f"Pre-download complete: {success_count} successful, {fail_count} failed.")
 
-    # Start the bot
+    if args.require_signatures:
+        print("Enabling strict signature verification (required for all messages)")
+        bot.bot.config.signature_verification_enabled = True
+        bot.bot.config.require_message_signatures = True
+        bot.bot.signature_manager.verification_enabled = True
+        bot.bot.signature_manager.require_signatures = True
+    elif args.enable_signatures:
+        print("Enabling optional signature verification")
+        bot.bot.config.signature_verification_enabled = True
+        bot.bot.config.require_message_signatures = False
+        bot.bot.signature_manager.verification_enabled = True
+        bot.bot.signature_manager.require_signatures = False
+
     bot.run()
 
 if __name__ == "__main__":
