@@ -7,6 +7,10 @@ A translation bot built with LXMFy and Argos Translate that provides offline tra
 - Offline translation using Argos Translate
 - Support for multiple languages
 
+## Requirements
+
+- sentencepiece
+
 ## Installation
 
 ```bash
@@ -21,10 +25,21 @@ pip install lxmfy-translate-bot
 lxmfy-translate-bot
 ```
 
-2. Available commands:
+2. Pre-download models (optional, speeds up first translations):
+```bash
+# Download all available models
+lxmfy-translate-bot --download-all
+
+# Download specific language pairs
+lxmfy-translate-bot --download en-es fr-de it-en
+```
+
+3. Available commands:
 - `translate <source_lang> <target_lang> <text>` - Translate text between languages
   Example: `translate en es Hello world`
 - `languages` - List all available languages for translation
+- `stats` - Show bot statistics and performance metrics
+- `help` - Show detailed help and usage information
 
 ## Language Codes
 
