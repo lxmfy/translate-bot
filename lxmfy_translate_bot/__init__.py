@@ -1,5 +1,4 @@
-"""
-Translate Bot - A translation bot using LXMFy and Argos Translate.
+"""Translate Bot - A translation bot using LXMFy and Argos Translate.
 """
 
-__version__ = "1.0.0" 
+__version__ = "1.0.0"
