@@ -1,22 +1,22 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="lxmfy-translate-bot",
-    version="1.0.0",
+    version="1.1.0",
     packages=find_packages(),
     install_requires=[
-        "lxmfy>=0.7.1,<0.8.0",
+        "lxmfy>=1.0.1,<2.0.0",
         "argostranslate>=1.9.6,<2.0.0",
     ],
     setup_requires=[
         "setuptools>=42",
         "wheel",
         "cmake>=3.5",
-        "ninja"
+        "ninja",
     ],
     entry_points={
-        'console_scripts': [
-            'translate-bot=lxmfy_translate_bot.bot:main',
+        "console_scripts": [
+            "translate-bot=lxmfy_translate_bot.bot:main",
         ],
     },
     author="LXMFy",
@@ -31,4 +31,4 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.13",
-) 
+)
