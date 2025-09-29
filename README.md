@@ -14,6 +14,16 @@ A translation bot built with LXMFy and Argos Translate that provides offline tra
 ## Installation
 
 ```bash
+pip install lxmfy-translate-bot
+
+# or
+
+pipx install lxmfy-translate-bot
+```
+
+or
+
+```bash
 pipx install git+https://github.com/LXMFy/translate-bot.git
 ```
 
